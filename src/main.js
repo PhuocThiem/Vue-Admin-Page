@@ -5,8 +5,12 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import '@mdi/font/css/materialdesignicons.css'
 import Vuelidate from 'vuelidate'
+import lodash from './mixin/lodash'
+import 'roboto-fontface/css/roboto/roboto-fontface.css'
 Vue.use(Vuelidate)
-// import 'roboto-fontface/css/roboto/roboto-fontface.css'
+
+const mixins = [lodash]
+mixins.forEach(mixin => Vue.mixin(mixin))
 
 Vue.config.productionTip = false
 

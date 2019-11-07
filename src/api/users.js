@@ -1,7 +1,7 @@
-// import http from '../config/api'
+import http from '../service/http'
 
-// export default class Users {
-//   static signUp () {
-//     return
-//   }
-// }
+export default class User {
+  static signUp (email, password) {
+    return http.post('/users', { email, password })
+  }
+}
