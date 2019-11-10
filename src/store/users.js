@@ -1,7 +1,7 @@
-// import { get } from 'lodash'
-// import { serializeError } from 'serialize-error'
+import { get } from 'lodash'
+import { serializeError } from 'serialize-error'
 
-// import User from '../api/users'
+import User from '../api/users'
 
 import {
   SIGN_UP_REQUEST,
@@ -19,14 +19,18 @@ const state = {
 }
 
 const actions = {
-  // async signUp ({commit}, {email, password}) {
-  //   commit(SIGN_UP_REQUEST);
-  //   try {
-  //     const res = await User.signUp(email,password);
-
-  //   } catch(error) {
-  //   }
-  // }
+  async signUp ({ commit }, { email, password }) {
+    commit(SIGN_UP_REQUEST)
+    try {
+      const res = await User.signUp(email, password)
+      const data = get(res, 'data')
+      const token = get(res, 'headers.[x-Auth]')
+      localStorage.setItem(token)
+      commit(SIGN_UP_SUCCESS, { data: data })
+    } catch (error) {
+      commit(SIGN_UP_FAIL, { error: serializeError(error) })
+    }
+  }
 }
 
 const mutations = {

@@ -6,7 +6,7 @@ import vuetify from './plugins/vuetify'
 import '@mdi/font/css/materialdesignicons.css'
 import Vuelidate from 'vuelidate'
 import lodash from './mixin/lodash'
-import 'roboto-fontface/css/roboto/roboto-fontface.css'
+// import 'roboto-fontface/css/roboto/roboto-fontface.css'
 Vue.use(Vuelidate)
 
 const mixins = [lodash]
