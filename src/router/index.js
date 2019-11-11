@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Users from '../views/Users.vue'
 import SignUp from '../views/SignUp.vue'
 import SignIn from '../views/SignIn.vue'
+import Storage from '../constant/Storage'
 
 Vue.use(VueRouter)
 
@@ -21,12 +22,20 @@ const routes = [
   {
     path: '/signup',
     name: 'signup',
-    component: SignUp
+    component: SignUp,
+    meta: {
+      public: true,
+      onlyWhenLogout: true
+    }
   },
   {
     path: '/signin',
     name: 'signin',
-    component: SignIn
+    component: SignIn,
+    meta: {
+      public: true,
+      onlyWhenLogout: true
+    }
   }
 ]
 
@@ -34,6 +43,26 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const token = Storage.getItem()
+
+  const isPublic = to.matched.some(record => record.meta.public)
+  const onlyWhenLogout = to.matched.some(record => record.meta.onlyWhenLogout)
+
+  if (!isPublic && !token) {
+    return next({
+      path: '/signin',
+      query: { redirect: to.fullPath }
+    })
+  }
+
+  if (token && onlyWhenLogout) {
+    return next('/')
+  }
+
+  return next()
 })
 
 export default router

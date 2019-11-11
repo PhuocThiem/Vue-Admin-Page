@@ -20,7 +20,7 @@
       @input="$v.password.$touch()"
       @blur="$v.password.$touch()"
     ></v-text-field>
-    <v-btn class="mr-4" @click="submit" :disabled="emailErrors.length > 0 ">submit</v-btn>
+    <v-btn class="mr-4" @click.prevent="submit" :disabled="emailErrors.length > 0 || passwordErrors.length > 0 ">submit</v-btn>
     <v-btn @click="clear">clear</v-btn>
   </form>
 </template>
@@ -66,10 +66,12 @@ export default {
   },
 
   methods: {
-    submit () {
+    async submit () {
       const email = this.email
       const password = this.password
-      this.$store.dispatch('signUp', { email, password })
+      await this.$store.dispatch('signUp', { email, password })
+      this.email = ''
+      this.password = ''
     },
     clear () {
       this.email = ''
