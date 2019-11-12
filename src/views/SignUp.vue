@@ -70,8 +70,6 @@ export default {
       const email = this.email
       const password = this.password
       await this.$store.dispatch('signUp', { email, password })
-      this.email = ''
-      this.password = ''
     },
     clear () {
       this.email = ''

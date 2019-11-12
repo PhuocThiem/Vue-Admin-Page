@@ -81,25 +81,24 @@ const mutations = {
     state.signUp.status = 'error'
     state.signUp.error = payload.error
   },
-  [SIGN_UP_REQUEST] (state) {
-    state.signUp.requesting = true
-    state.signUp.status = ''
+  [SIGN_IN_REQUEST] (state) {
+    state.signIn.requesting = true
+    state.signIn.status = ''
   },
-  [SIGN_UP_SUCCESS] (state, payload) {
-    state.signUp.requesting = false
-    state.signUp.status = 'success'
-    state.signUp.result = payload
+  [SIGN_IN_SUCCESS] (state, payload) {
+    state.signIn.requesting = false
+    state.signIn.status = 'success'
+    state.signIn.result = payload
   },
-  [SIGN_UP_FAIL] (state, payload) {
-    state.signUp.requesting = false
-    state.signUp.status = 'error'
-    state.signUp.error = payload.error
+  [SIGN_IN_FAIL] (state, payload) {
+    state.signIn.requesting = false
+    state.signIn.status = 'error'
+    state.signIn.error = payload.error
   },
   [SET_TOKEN_TO_HEADERS] (state, payload) {
     axios.defaults.headers.common['X-Auth'] = payload
   }
 }
-
 const getters = {
 }
 

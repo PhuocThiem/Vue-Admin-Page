@@ -66,12 +66,10 @@ export default {
   },
 
   methods: {
-    async submit () {
+    async signIn () {
       const email = this.email
       const password = this.password
       await this.$store.dispatch('signIn', { email, password })
-      this.email = ''
-      this.password = ''
     },
     clear () {
       this.email = ''
