@@ -12,6 +12,11 @@
       <v-app-bar clipped-left app color="indigo" dark>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-toolbar-title>Admin</v-toolbar-title>
+        <div class="my-2" style="margin-left: 90%">
+            <v-btn color="warning" type="submit" fab dark @click="signOut">
+              <v-icon>mdi-account-circle</v-icon>
+            </v-btn>
+        </div>
       </v-app-bar>
       <v-navigation-drawer clipped v-model="drawer" app color="#0091EA" dark>
         <v-list>
@@ -53,6 +58,11 @@ export default {
           name: 'Users',
           to: '/users',
           icon: 'mdi-shield-account '
+        },
+        {
+          name: 'Todo List',
+          to: '/todo',
+          icon: 'mdi-format-list-checks '
         }
       ]
     }
@@ -61,6 +71,12 @@ export default {
     const token = Storage.getItem()
     if (token) {
       this.$store.commit(SET_TOKEN_TO_HEADERS, token)
+    }
+  },
+  methods: {
+    async signOut () {
+      await this.$store.dispatch('signOut')
+      location.reload()
     }
   }
 }

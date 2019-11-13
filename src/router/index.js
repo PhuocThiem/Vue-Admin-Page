@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import TodoList from '../views/TotoList.vue'
 import Users from '../views/Users.vue'
 import SignUp from '../views/SignUp.vue'
 import SignIn from '../views/SignIn.vue'
@@ -18,6 +19,11 @@ const routes = [
     path: '/users',
     name: 'users',
     component: Users
+  },
+  {
+    path: '/todo',
+    name: 'todo',
+    component: TodoList
   },
   {
     path: '/signup',
@@ -61,7 +67,6 @@ router.beforeEach((to, from, next) => {
   if (token && onlyWhenLogout) {
     return next('/')
   }
-
   return next()
 })
 

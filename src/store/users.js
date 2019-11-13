@@ -63,6 +63,9 @@ const actions = {
     } catch (error) {
       commit(SIGN_IN_FAIL, { error: serializeError(error) })
     }
+  },
+  async signOut () {
+    await Storage.removeItem()
   }
 }
 
