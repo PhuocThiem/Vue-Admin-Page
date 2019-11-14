@@ -13,6 +13,7 @@
 
     <v-text-field
       v-model="password"
+      type="password"
       :error-messages="passwordErrors"
       :counter="50"
       label="Password"
