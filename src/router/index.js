@@ -21,7 +21,7 @@ const routes = [
     component: Users
   },
   {
-    path: '/todo',
+    path: '/todos',
     name: 'todo',
     component: TodoList
   },

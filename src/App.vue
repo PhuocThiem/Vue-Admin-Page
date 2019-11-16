@@ -61,7 +61,7 @@ export default {
         },
         {
           name: 'Todo List',
-          to: '/todo',
+          to: '/todos',
           icon: 'mdi-format-list-checks '
         }
       ]
