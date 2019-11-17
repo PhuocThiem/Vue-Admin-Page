@@ -28,12 +28,12 @@ const state = {
 }
 
 const actions = {
-  async addNewTask ({ commit }, task, token) {
+  async addNewTask ({ commit }, { task, token }) {
     commit(ADD_TASK_REQUEST)
     try {
       const res = await Todo.addTask(task, token)
       const data = get(res, 'data')
-      commit(ADD_TASK_SUCCESS, data.todos[0].text)
+      commit(ADD_TASK_SUCCESS, data)
     } catch (error) {
       commit(ADD_TASK_FAIL, { error: serializError(error) })
     }
@@ -42,7 +42,7 @@ const actions = {
     commit(GET_TASK_REQUEST)
     try {
       const res = await Todo.getTask(token)
-      const data = get(res, 'data')
+      const data = get(res, 'data.todos')
       commit(GET_TASK_SUCCESS, { data: data })
     } catch (error) {
       commit(GET_TASK_FAIL, { error: serializError(error) })
@@ -83,7 +83,7 @@ const mutations = {
 
 const getters = {
   task: state => get(state, 'task.result', {}),
-  tasks: state => get(state, 'tasks.result', {})
+  tasks: state => get(state, 'tasks.result', [])
 }
 
 export default {
