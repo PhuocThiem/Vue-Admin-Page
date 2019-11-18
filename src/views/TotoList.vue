@@ -20,7 +20,7 @@
           >
           <v-row>
           <div>
-            <v-checkbox v-model="completed" :label="`completed`"></v-checkbox>
+            <v-checkbox v-model="checkbox1" update:indeterminate(item._id, checkbox1) :label="`checkbox1: ${checkbox1.toString()}`"></v-checkbox>
           </div>
           <div>
             <v-list-item-content style="margin-top: 8px; margin-left: 10px">
@@ -46,7 +46,7 @@ import Storage from '../constant/Storage'
 export default {
   data: () => ({
     text: '',
-    completed: false
+    checkbox1: false
   }),
   async mounted () {
     const token = await Storage.getItem()
@@ -74,6 +74,10 @@ export default {
       const token = await Storage.getItem()
       this.$store.dispatch('deleteTask', { id, token })
       return this.tasks.data.splice(index, 1)
+    },
+    async indeterminate (id, completed) {
+      const token = await Storage.getItem()
+      this.$store.dispatch('updateTask', { id, completed, token })
     }
   }
 }
