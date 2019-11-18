@@ -798,6 +798,11 @@
     error-stack-parser "^2.0.0"
     string-width "^2.0.0"
 
+"@types/chart.js@^2.7.48":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@types/chart.js/-/chart.js-2.9.0.tgz#b8d292c1fdca71be8d80d97400759c3806cd5d28"
+  integrity sha512-AsojgiTzlfLmIAyzzN5KkNrlkg645bg6MRBjkFsPuFYff0toasck6Jx/W772kyrSPcO90bBGtExM8wrBn/niJA==
+
 "@types/events@*":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
@@ -5447,6 +5452,15 @@ neo-async@^2.5.0, neo-async@^2.6.0, neo-async@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
+
+ng2-charts@~2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/ng2-charts/-/ng2-charts-2.2.5.tgz#6375eabc0cb979a41d905339a65b810019390337"
+  integrity sha512-wKN7fp76BBoPMvrMLCrkMZKONxCbL9A5MRkTs5HLgOiifPG8yHHHt0voqUihxSV+OuGNpygzUl3K8aAD43RVBw==
+  dependencies:
+    "@types/chart.js" "^2.7.48"
+    lodash "^4.17.11"
+    tslib "^1.9.0"
 
 nice-try@^1.0.4:
   version "1.0.5"

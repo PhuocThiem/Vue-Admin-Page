@@ -18,13 +18,19 @@
             v-for="(item, index) in tasks.data"
             :key="index"
           >
-            <v-list-item-icon>
-              <v-icon v-text="item.icon"></v-icon>
-            </v-list-item-icon>
-
-            <v-list-item-content>
+          <v-row>
+          <div>
+            <v-checkbox v-model="completed" :label="`completed`"></v-checkbox>
+          </div>
+          <div>
+            <v-list-item-content style="margin-top: 8px; margin-left: 10px">
               <v-list-item-title v-text="item.text"></v-list-item-title>
             </v-list-item-content>
+          </div>
+          </v-row>
+            <v-btn color="alert" type="submit" fab @click="deleteTask(item._id,index)" style="margin-top: 5%">
+              <v-icon> mdi-delete </v-icon>
+            </v-btn>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -39,7 +45,8 @@ import Storage from '../constant/Storage'
 
 export default {
   data: () => ({
-    text: ''
+    text: '',
+    completed: false
   }),
   async mounted () {
     const token = await Storage.getItem()
@@ -57,11 +64,16 @@ export default {
   },
 
   methods: {
-    async addTask () {
+    async addTask (text) {
       const token = await Storage.getItem()
       const task = this.text
-      this.$store.dispatch('addNewTask', { task, token })
-      this.tasks.data.push(this.task)
+      await this.$store.dispatch('addNewTask', { task, token })
+      return this.tasks.data.push(this.task)
+    },
+    async deleteTask (id, index) {
+      const token = await Storage.getItem()
+      this.$store.dispatch('deleteTask', { id, token })
+      return this.tasks.data.splice(index, 1)
     }
   }
 }

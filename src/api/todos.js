@@ -7,4 +7,9 @@ export default class Todo {
   static getTask (token) {
     return http.get('/todos', token)
   }
+  static deleteTask (id, token) {
+    console.log('id', id)
+    console.log('token', token)
+    return http.delete(`/todos/${id}`, token)
+  }
 }

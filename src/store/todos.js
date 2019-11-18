@@ -5,9 +5,14 @@ import {
   ADD_TASK_REQUEST,
   ADD_TASK_SUCCESS,
   ADD_TASK_FAIL,
+
   GET_TASK_REQUEST,
   GET_TASK_SUCCESS,
-  GET_TASK_FAIL
+  GET_TASK_FAIL,
+
+  DELETE_TASK_REQUEST,
+  DELETE_TASK_SUCCESS,
+  DELETE_TASK_FAIL
 } from '../constant/muationTypes'
 
 import Todo from '../api/todos'
@@ -47,6 +52,18 @@ const actions = {
     } catch (error) {
       commit(GET_TASK_FAIL, { error: serializError(error) })
     }
+  },
+  async deleteTask ({ commit }, { id, token }) {
+    commit(DELETE_TASK_REQUEST)
+    try {
+      console.log('idJS', id)
+      console.log('tokenJS', token)
+      const res = await Todo.deleteTask(id, token)
+      const data = get(res, 'data.todos')
+      commit(DELETE_TASK_SUCCESS, data)
+    } catch (error) {
+      commit(DELETE_TASK_FAIL, { error: serializError(error) })
+    }
   }
 }
 
@@ -78,6 +95,20 @@ const mutations = {
     state.tasks.requesting = false
     state.tasks.status = 'error'
     state.tasks.error = payload.error
+  },
+  [DELETE_TASK_REQUEST] (state) {
+    state.task.requesting = true
+    state.task.status = 'requesting...'
+  },
+  [DELETE_TASK_SUCCESS] (state, payload) {
+    state.task.requesting = false
+    state.task.status = 'success'
+    state.task.result = payload
+  },
+  [DELETE_TASK_FAIL] (state, payload) {
+    state.task.requesting = false
+    state.task.status = 'error'
+    state.task.error = payload.error
   }
 }
 
