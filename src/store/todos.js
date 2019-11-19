@@ -67,10 +67,10 @@ const actions = {
       commit(DELETE_TASK_FAIL, { error: serializError(error) })
     }
   },
-  async updateTask ({ commit }, { id, completed, token }) {
+  async updateTask ({ commit }, { id, text, completed, token }) {
     commit(UPDATE_TASK_REQUEST)
     try {
-      const res = await Todo.updateTask(id, completed, token)
+      const res = await Todo.updateTask(id, text, completed, token)
       const data = get(res, 'data.todos')
       commit(UPDATE_TASK_SUCCESS, data)
     } catch (error) {

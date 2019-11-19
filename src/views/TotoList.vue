@@ -1,52 +1,43 @@
 <template>
-    <v-card
-    style="margin: 10px auto; width: 500px"
-    >
+  <v-card style="margin: 100px auto; width: 800px; padding: 50px">
     <form style="margin: 10px">
       <div class="form-group">
-        <label for="exampleInputEmail1">New Task</label>
-        <input type="text" class="form-control" v-model="text" placeholder="Input new task">
+        <label >New Task</label>
+        <input type="text" class="form-control" v-model="text" placeholder="Input new task" />
       </div>
-  <button class="btn btn-primary" @click.prevent="addTask">+Add</button>
-  </form>
-    <v-list
-      >
-        <v-list-item-group
-          color="indigo"
-        >
-          <v-list-item
-            v-for="(item, index) in tasks.data"
-            :key="index"
-          >
+      <button class="btn btn-primary" @click.prevent="addTask">+Add</button>
+    </form>
+    <v-list>
+      <v-list-item-group color="indigo">
+        <v-list-item v-for="(item, index) in tasks.data" :key="index">
           <v-row>
-          <div>
-            <v-checkbox v-model="checkbox1" update:indeterminate(item._id, checkbox1) :label="`checkbox1: ${checkbox1.toString()}`"></v-checkbox>
-          </div>
-          <div>
-            <v-list-item-content style="margin-top: 8px; margin-left: 10px">
-              <v-list-item-title v-text="item.text"></v-list-item-title>
-            </v-list-item-content>
-          </div>
+            <div>
+              <v-checkbox v-model="checkbox" color="green" @change="updateStatus(item._id, item.text, checkbox)"></v-checkbox>
+            </div>
+            <div>
+              <v-list-item-content style="margin-top: 8px; margin-left: 10px">
+                <v-list-item-title v-text="item.text"></v-list-item-title>
+              </v-list-item-content>
+            </div>
           </v-row>
-            <v-btn color="alert" type="submit" fab @click="deleteTask(item._id,index)" style="margin-top: 5%">
-              <v-icon> mdi-delete </v-icon>
-            </v-btn>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-      </v-card>
+          <v-btn color="alert" type="submit" fab @click="deleteTask(item._id, index)" style="margin-top: 3%">
+            <v-icon> mdi-delete </v-icon>
+          </v-btn>
+        </v-list-item>
+      </v-list-item-group>
+    </v-list>
+  </v-card>
 </template>
 
 <script>
-
 import { mapState, mapGetters } from 'vuex'
 import { get } from 'lodash'
 import Storage from '../constant/Storage'
 
 export default {
   data: () => ({
-    text: '',
-    checkbox1: false
+    text: ''
+    // checkbox: false
   }),
   async mounted () {
     const token = await Storage.getItem()
@@ -55,7 +46,9 @@ export default {
   computed: {
     ...mapState({
       addRequesting: state => get('todos.state.task.requeting'),
-      getrequesting: state => get('todos.state.tasks.requeting')
+      getRequesting: state => get('todos.state.tasks.requeting'),
+      deleteRequesting: state => get('todos.state.task.requeting'),
+      patchRequesting: state => get('todos.state.task.requeting')
     }),
     ...mapGetters({
       task: 'task',
@@ -75,9 +68,10 @@ export default {
       this.$store.dispatch('deleteTask', { id, token })
       return this.tasks.data.splice(index, 1)
     },
-    async indeterminate (id, completed) {
+    async updateStatus (id, text, completed) {
       const token = await Storage.getItem()
-      this.$store.dispatch('updateTask', { id, completed, token })
+      console.log('status', completed)
+      this.$store.dispatch('updateTask', { id, text, completed, token })
     }
   }
 }

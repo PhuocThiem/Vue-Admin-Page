@@ -10,10 +10,11 @@ export default class Todo {
   static deleteTask (id, token) {
     return http.delete(`/todos/${id}`, token)
   }
-  static updateTask (id, completed, token) {
+  static updateTask (id, text, completed, token) {
     console.log('id', id)
     console.log('token', token)
     console.log('completed', completed)
-    return http.patch(`/todos/${id}`, completed, token)
+    console.log('text', text)
+    return http.patch(`/todos/${id}`, text, completed, token)
   }
 }
