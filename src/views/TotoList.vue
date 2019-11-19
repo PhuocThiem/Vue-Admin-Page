@@ -1,5 +1,5 @@
 <template>
-  <v-card style="margin: 100px auto; width: 800px; padding: 50px">
+  <v-card style="margin: 30px auto; width: 800px; padding: 50px">
     <form style="margin: 10px">
       <div class="form-group">
         <label style="font-size: 30px">New Task</label>
@@ -11,7 +11,7 @@
       <label style="font-size: 30px">List Task: {{ counterTask() }}    |<span style="color: #2E7D32"> Done: {{ counterDone() }}</span>    |<span style="color: #1E88E5">Todo: {{ counterTodo() }}</span>
       </label>
       <v-list-item-group color="indigo">
-        <v-list-item v-for="(item, index) in tasks.data" :key="index" style="background-color: #ECEFF1; margin-bottom: 5px">
+        <v-list-item v-for="(item, index) in tasks.data" :key="index" style="background-color: #ECEFF1; margin-bottom: 5px; padding-left: 20px">
           <v-row>
             <div>
               <v-checkbox v-model="item.completed" color="green" @change="updateStatus(item._id, item.text, item.completed)"></v-checkbox>
