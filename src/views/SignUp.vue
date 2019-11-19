@@ -1,9 +1,10 @@
 <template>
-  <form style="width: 500px; margin: 10% auto">
+  <form style="width: 500px; margin: 5% auto">
+    <h1 style="margin: 2px auto">Sign Up</h1>
     <v-text-field
       v-model="email"
       :error-messages="emailErrors"
-      :counter="20"
+      :counter="50"
       label="E-mail"
       required
       @input="$v.email.$touch()"
@@ -13,13 +14,13 @@
     <v-text-field
       v-model="password"
       :error-messages="passwordErrors"
-      :counter="20"
+      :counter="50"
       label="Password"
       required
       @input="$v.password.$touch()"
       @blur="$v.password.$touch()"
     ></v-text-field>
-    <v-btn class="mr-4" @click="submit">submit</v-btn>
+    <v-btn class="mr-4" @click.prevent="submit" :disabled="emailErrors.length > 0 || passwordErrors.length > 0 ">submit</v-btn>
     <v-btn @click="clear">clear</v-btn>
   </form>
 </template>
@@ -65,13 +66,14 @@ export default {
   },
 
   methods: {
-    submit () {
-      console.log(this.email)
-      console.log(this.password)
+    async submit () {
+      const email = this.email
+      const password = this.password
+      await this.$store.dispatch('signUp', { email, password })
     },
     clear () {
-      this.name = ''
       this.email = ''
+      this.password = ''
     }
   }
 }
