@@ -2,14 +2,16 @@
   <v-card style="margin: 100px auto; width: 800px; padding: 50px">
     <form style="margin: 10px">
       <div class="form-group">
-        <label >New Task</label>
+        <label style="font-size: 30px">New Task</label>
         <input type="text" class="form-control" v-model="text" placeholder="Input new task" />
       </div>
       <button class="btn btn-primary" @click.prevent="addTask">+Add</button>
     </form>
-    <v-list>
+    <v-list style="padding-left: 10px">
+      <label style="font-size: 30px">List Task: {{ counterTask() }}    |<span style="color: #2E7D32"> Done: {{ counterDone() }}</span>    |<span style="color: #1E88E5">Todo: {{ counterTodo() }}</span>
+      </label>
       <v-list-item-group color="indigo">
-        <v-list-item v-for="(item, index) in tasks.data" :key="index">
+        <v-list-item v-for="(item, index) in tasks.data" :key="index" style="background-color: #ECEFF1; margin-bottom: 5px">
           <v-row>
             <div>
               <v-checkbox v-model="item.completed" color="green" @change="updateStatus(item._id, item.text, item.completed)"></v-checkbox>
@@ -17,6 +19,7 @@
             <div>
               <v-list-item-content style="margin-top: 8px; margin-left: 10px">
                 <v-list-item-title v-text="item.text"></v-list-item-title>
+                <div v-if="item.completed">Completed Date: {{ formatTime(item.completedAt) }}</div>
               </v-list-item-content>
             </div>
           </v-row>
@@ -33,6 +36,7 @@
 import { mapState, mapGetters } from 'vuex'
 import { get } from 'lodash'
 import Storage from '../constant/Storage'
+import moment from 'moment'
 
 export default {
   data: () => ({
@@ -72,6 +76,24 @@ export default {
       const token = await Storage.getItem()
       console.log('status', completed)
       await this.$store.dispatch('updateTask', { id, text, completed, token })
+    },
+    formatTime (s) {
+      return moment(s).format('YYYY-MM-DD HH:MM')
+    },
+    counterTask () {
+      return this.tasks.data.length
+    },
+    counterDone () {
+      let counter = 0
+      for (let index = 0; index < this.tasks.data.length; index++) {
+        if (this.tasks.data[index].completed === true) {
+          counter++
+        }
+      }
+      return counter
+    },
+    counterTodo () {
+      return this.tasks.data.length - this.counterDone()
     }
   }
 }
