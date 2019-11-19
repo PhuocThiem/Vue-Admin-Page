@@ -15,6 +15,6 @@ export default class Todo {
     console.log('token', token)
     console.log('completed', completed)
     console.log('text', text)
-    return http.patch(`/todos/${id}`, text, completed, token)
+    return http.patch(`/todos/${id}`, { text, completed }, token)
   }
 }

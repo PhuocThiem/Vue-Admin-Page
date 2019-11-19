@@ -12,7 +12,7 @@
         <v-list-item v-for="(item, index) in tasks.data" :key="index">
           <v-row>
             <div>
-              <v-checkbox v-model="checkbox" color="green" @change="updateStatus(item._id, item.text, checkbox)"></v-checkbox>
+              <v-checkbox v-model="item.completed" color="green" @change="updateStatus(item._id, item.text, item.completed)"></v-checkbox>
             </div>
             <div>
               <v-list-item-content style="margin-top: 8px; margin-left: 10px">
@@ -71,7 +71,7 @@ export default {
     async updateStatus (id, text, completed) {
       const token = await Storage.getItem()
       console.log('status', completed)
-      this.$store.dispatch('updateTask', { id, text, completed, token })
+      await this.$store.dispatch('updateTask', { id, text, completed, token })
     }
   }
 }
