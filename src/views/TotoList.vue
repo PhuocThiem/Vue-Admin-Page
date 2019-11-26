@@ -11,7 +11,7 @@
       <label style="font-size: 30px">List Task: {{ counterTask() }}    |<span style="color: #2E7D32"> Done: {{ counterDone() }}</span>    |<span style="color: #1E88E5">Todo: {{ counterTodo() }}</span>
       </label>
       <v-list-item-group color="indigo">
-        <v-list-item v-for="(item, index) in tasks.data" :key="index" style="background-color: #ECEFF1; margin-bottom: 5px; padding-left: 20px">
+        <v-list-item v-for="(item, index) in tasks.data" :key="item._id" style="background-color: #ECEFF1; margin-bottom: 5px; padding-left: 20px">
           <v-row>
             <div>
               <v-checkbox v-model="item.completed" color="green" @change="updateStatus(item._id, item.text, item.completed)"></v-checkbox>
@@ -19,7 +19,7 @@
             <div>
               <v-list-item-content style="margin-top: 8px; margin-left: 10px">
                 <v-list-item-title v-text="item.text"></v-list-item-title>
-                <div v-if="item.completed">Completed Date: {{ formatTime(item.completedAt) }}</div>
+                <div v-if="item.completed && item.completedAt">Completed Date: {{ formatTime(item.completedAt) }}</div>
               </v-list-item-content>
             </div>
           </v-row>
@@ -78,7 +78,7 @@ export default {
       await this.$store.dispatch('updateTask', { id, text, completed, token })
     },
     formatTime (s) {
-      return moment(s).format('YYYY-MM-DD HH:MM')
+      return moment(s).format('YYYY-MM-DD HH:mm')
     },
     counterTask () {
       return this.tasks.data.length
